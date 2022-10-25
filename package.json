@@ -1,0 +1,50 @@
+{
+  "name": "omii-play",
+  "version": "1.0.0",
+  "description": "omii playground",
+  "main": "index.js",
+  "type": "module",
+  "externals": {
+    "omii": "/es-lib/omii/latest/omii.js",
+    "omii-ui": "/es-lib/omii-ui/latest/omii-ui.js"
+  },
+  "localDev": {
+    "server": {
+      "port": 8931
+    },
+    "api": {
+      "host": "localhost",
+      "port": 8991,
+      "from": "/es-lib/omii-ui/latest/",
+      "to": "/"
+    }
+  },
+  "scripts": {
+    "start": "node esbuild.js dev",
+    "build": "node esbuild.js prod"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lv-saharan/omii-play.git"
+  },
+  "keywords": [
+    "omii",
+    "play",
+    "playground",
+    "omii-ui",
+    "examples",
+    "controls",
+    "demos"
+  ],
+  "author": "Lv-saharan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lv-saharan/omii-play/issues"
+  },
+  "homepage": "https://github.com/lv-saharan/omii-play#readme",
+  "devDependencies": {
+    "local-dev-server": "^1.0.12",
+    "esbuild": "^0.14.49",
+    "esbuild-sass-plugin": "^2.3.0"
+  }
+}
