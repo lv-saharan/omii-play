@@ -64,7 +64,7 @@ if (mode == "dev") {
         }
         return false;
     }
-    const { reload } = dev({ ...pkg.localDev.server, response }, pkg.localDev.api)
+    const { reload } = dev({ ...pkg.localDev.server, response }, pkg.localDev.proxy)
     esbuild.build({
         ...options,
         write: false,

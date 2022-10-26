@@ -11,7 +11,18 @@ define(
   class extends Component {
     static stylesheets =
       "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.6.0/styles/default.min.css";
-    static css = [getCSSStyleSheets("reboot", "utilities", "scrollbar"), css];
+    static css = [
+      getCSSStyleSheets(
+        "reboot",
+        "tables",
+        "utilities",
+        "forms",
+        "buttons",
+        "grid",
+        "scrollbar"
+      ),
+      css,
+    ];
     layoutRef = createRef();
     htmlRef = createRef();
     cssRef = createRef();
@@ -21,7 +32,16 @@ define(
     #talk = {};
     async loadTalk(path, init = false) {
       this.currPath = path;
-      const [content, css, html, jsx] = await Promise.all([
+      const [store, content, css, html, jsx] = await Promise.all([
+        import(`./contents${path}/store.js`)
+          .then(({ default: store }) => {
+            this.store.content = store;
+            return store;
+          })
+          .catch((exc) => {
+            console.error(exc);
+            return null;
+          }),
         fetch(`./contents${path}/content.html`)
           .then((r) => (r.status == 200 ? r.text() : null))
           .catch(() => null),
@@ -45,7 +65,6 @@ define(
 
       if (!init && this.#talk.content) {
         await this.$("#content").update();
-        this.initContent();
         this.$("#content").parentNode.scrollTop = 0;
         this.highlight();
         this.cssRef.current.value = css;
@@ -53,15 +72,7 @@ define(
         this.jsxRef.current.value = jsx;
       }
     }
-    initContent() {
-      import(`./contents${this.currPath}/content.js`)
-        .then(({ init }) => {
-          init(html, this.$("#content"));
-        })
-        .catch((exc) => {
-          console.info("import content js error", exc);
-        });
-    }
+
     highlight() {
       this.$("#content")
         .querySelectorAll("pre code")
@@ -104,9 +115,7 @@ define(
       await this.loadTalk(
         ["", ...this.expandedKeys, this.selectedKey].join("/"),
         true
-      ).then(() => {
-        this.initContent();
-      });
+      );
     }
     installed() {
       import(

@@ -11,13 +11,8 @@
   "localDev": {
     "server": {
       "port": 8931
-    },
-    "api": {
-      "host": "localhost",
-      "port": 8991,
-      "from": "/es-lib/omii-ui/latest/",
-      "to": "/"
     }
+  
   },
   "scripts": {
     "start": "node esbuild.js dev",
