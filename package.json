@@ -1,6 +1,6 @@
 {
   "name": "omii-play",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "omii playground",
   "main": "index.js",
   "type": "module",
